@@ -58,7 +58,69 @@
 			})();
 		</script>
 		
+		<script>
+			window.INTRACOMP_API_BASE_URL = "https://intracomp-real-time-aframe-web-platform-50iv.onrender.com";
+		</script>
 		
+		<script>
+			// User permissions for A-Frame Inspector
+			window.AFRAME_SCENE_PERMISSIONS = {
+				userRole: "owner",
+				canEdit: true,
+				isPublic: false,
+				viewOnly: false
+			};
+			
+			// Configure A-Frame Inspector based on permissions
+			window.AFRAME_INSPECTOR_CONFIG = {
+				copyCameraPosition: true,
+				viewOnly: false
+			};
+			
+			// For viewers, inspector script is not loaded, so just provide user feedback
+			if (false) {
+				// Block keyboard shortcuts and show message
+				document.addEventListener('keydown', function(evt) {
+					const shortcutPressed = evt.keyCode === 73 && 
+						((evt.ctrlKey && evt.altKey) || evt.getModifierState('AltGraph'));
+					if (shortcutPressed) {
+						evt.preventDefault();
+						evt.stopPropagation();
+						showViewerMessage();
+						return false;
+					}
+				}, true);
+				
+				function showViewerMessage() {
+					// Create a temporary notification
+					const notification = document.createElement('div');
+					notification.style.cssText = `
+						position: fixed;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						background: rgba(255, 152, 0, 0.95);
+						color: white;
+						padding: 20px 30px;
+						border-radius: 8px;
+						font-family: Arial, sans-serif;
+						font-size: 16px;
+						z-index: 999999;
+						text-align: center;
+						box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+					`;
+					notification.innerHTML = '🔒 Inspector Not Available<br><small>You have view-only access to this scene</small>';
+					document.body.appendChild(notification);
+					
+					// Remove notification after 3 seconds
+					setTimeout(() => {
+						if (notification.parentNode) {
+							notification.parentNode.removeChild(notification);
+						}
+					}, 3000);
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<a-scene>
@@ -67,8 +129,9 @@
       <a-entity name="Animated Fox" gltf-model="/vendor/aframe-inspector/assets/gltf/animated_fox.glb" position="0 0 -3" rotation="0 0 0" scale="0.005 0.00495 0.00495" id="entity-1" material="alphaTest: 0; depthTest: true; depthWrite: true; flatShading: false; npot: false; offset: [object Object]; opacity: 1; repeat: [object Object]; shader: standard; side: front; transparent: false; vertexColorsEnabled: false; visible: true; blending: normal; dithering: true; anisotropy: 0; ambientOcclusionMap: ; ambientOcclusionMapIntensity: 1; ambientOcclusionTextureOffset: [object Object]; ambientOcclusionTextureRepeat: [object Object]; color: #ffffff; displacementMap: ; displacementScale: 1; displacementBias: 0.5; displacementTextureOffset: [object Object]; displacementTextureRepeat: [object Object]; emissive: #000; emissiveIntensity: 1; envMap: ; fog: true; metalness: 0; metalnessMap: ; metalnessTextureOffset: [object Object]; metalnessTextureRepeat: [object Object]; normalMap: ; normalScale: [object Object]; normalTextureOffset: [object Object]; normalTextureRepeat: [object Object]; roughness: 0.5; roughnessMap: ; roughnessTextureOffset: [object Object]; roughnessTextureRepeat: [object Object]; sphericalEnvMap: ; src: ; wireframe: false; wireframeLinewidth: 2"></a-entity>
       <a-entity name="Cesium Milk Truck" gltf-model="/vendor/aframe-inspector/assets/gltf/cesium_milk_truck.glb" position="1.3675 0 -3" rotation="-1 50 0" scale="0.3 0.3 0.3" id="entity-2" material="alphaTest: 0; depthTest: true; depthWrite: true; flatShading: false; npot: false; offset: [object Object]; opacity: 1; repeat: [object Object]; shader: standard; side: front; transparent: false; vertexColorsEnabled: false; visible: true; blending: normal; dithering: true; anisotropy: 0; ambientOcclusionMap: ; ambientOcclusionMapIntensity: 1; ambientOcclusionTextureOffset: [object Object]; ambientOcclusionTextureRepeat: [object Object]; color: #ffffff; displacementMap: ; displacementScale: 1; displacementBias: 0.5; displacementTextureOffset: [object Object]; displacementTextureRepeat: [object Object]; emissive: #000; emissiveIntensity: 1; envMap: ; fog: true; metalness: 0; metalnessMap: ; metalnessTextureOffset: [object Object]; metalnessTextureRepeat: [object Object]; normalMap: ; normalScale: [object Object]; normalTextureOffset: [object Object]; normalTextureRepeat: [object Object]; roughness: 0.5; roughnessMap: ; roughnessTextureOffset: [object Object]; roughnessTextureRepeat: [object Object]; sphericalEnvMap: ; src: ; wireframe: false; wireframeLinewidth: 2"></a-entity>
       <a-gltf-model name="Tent" gltf-model="https://intracomp-real-time-aframe-web-platform-50iv.onrender.com/api/assets/692a3d0cc6f53823c393f6a8619ae640c698074989fa136b0731fbd93636bc06.glb" position="0 0 -5.00268" id="gltf-model-1" scale="0.1 0.1 0.1" material="alphaTest: 0; depthTest: true; depthWrite: true; flatShading: false; npot: false; offset: [object Object]; opacity: 1; repeat: [object Object]; shader: standard; side: front; transparent: false; vertexColorsEnabled: false; visible: true; blending: normal; dithering: true; anisotropy: 0; ambientOcclusionMap: ; ambientOcclusionMapIntensity: 1; ambientOcclusionTextureOffset: [object Object]; ambientOcclusionTextureRepeat: [object Object]; color: #ffffff; displacementMap: ; displacementScale: 1; displacementBias: 0.5; displacementTextureOffset: [object Object]; displacementTextureRepeat: [object Object]; emissive: #000; emissiveIntensity: 1; envMap: ; fog: true; metalness: 0; metalnessMap: ; metalnessTextureOffset: [object Object]; metalnessTextureRepeat: [object Object]; normalMap: ; normalScale: [object Object]; normalTextureOffset: [object Object]; normalTextureRepeat: [object Object]; roughness: 0.5; roughnessMap: ; roughnessTextureOffset: [object Object]; roughnessTextureRepeat: [object Object]; sphericalEnvMap: ; src: ; wireframe: false; wireframeLinewidth: 2"></a-gltf-model>
-      <a-sky id="sky" color="#ECECEC" scale="-1 1 1" material="alphaTest: 0; depthTest: true; depthWrite: true; flatShading: false; npot: true; offset: [object Object]; opacity: 1; repeat: [object Object]; shader: flat; side: back; transparent: false; vertexColorsEnabled: false; visible: true; blending: normal; dithering: true; anisotropy: 0; color: #ECECEC; fog: true; src: ; wireframe: false; wireframeLinewidth: 2; toneMapped: true" geometry="buffer: true; primitive: sphere; skipCache: false; radius: 500; phiLength: 360; phiStart: 0; thetaLength: 180; thetaStart: 0; segmentsHeight: 32; segmentsWidth: 64"></a-sky>
-			<a-plane id="ground" position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+      <a-plane id="ground" position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" material="alphaTest: 0; depthTest: true; depthWrite: true; flatShading: false; npot: false; offset: [object Object]; opacity: 1; repeat: [object Object]; shader: standard; side: front; transparent: false; vertexColorsEnabled: false; visible: true; blending: normal; dithering: true; anisotropy: 0; ambientOcclusionMap: ; ambientOcclusionMapIntensity: 1; ambientOcclusionTextureOffset: [object Object]; ambientOcclusionTextureRepeat: [object Object]; color: #7BC8A4; displacementMap: ; displacementScale: 1; displacementBias: 0.5; displacementTextureOffset: [object Object]; displacementTextureRepeat: [object Object]; emissive: #000; emissiveIntensity: 1; envMap: ; fog: true; metalness: 0; metalnessMap: ; metalnessTextureOffset: [object Object]; metalnessTextureRepeat: [object Object]; normalMap: ; normalScale: [object Object]; normalTextureOffset: [object Object]; normalTextureRepeat: [object Object]; roughness: 0.5; roughnessMap: ; roughnessTextureOffset: [object Object]; roughnessTextureRepeat: [object Object]; sphericalEnvMap: ; src: ; wireframe: false; wireframeLinewidth: 2" geometry="buffer: true; primitive: plane; skipCache: false; height: 4; width: 4; segmentsHeight: 1; segmentsWidth: 1"></a-plane>
+      <a-sky id="sky" color="#ECECEC" scale="-1 1 1" material="alphaTest: 0; depthTest: true; depthWrite: true; flatShading: false; npot: true; offset: [object Object]; opacity: 1; repeat: [object Object]; shader: flat; side: back; transparent: false; vertexColorsEnabled: false; visible: true; blending: normal; dithering: true; anisotropy: 0; color: #e2d222; fog: true; src: ; wireframe: false; wireframeLinewidth: 2; toneMapped: true" geometry="buffer: true; primitive: sphere; skipCache: false; radius: 500; phiLength: 360; phiStart: 0; thetaLength: 180; thetaStart: 0; segmentsHeight: 32; segmentsWidth: 64"></a-sky>
+			
 			
 		</a-scene>
 	</body>
