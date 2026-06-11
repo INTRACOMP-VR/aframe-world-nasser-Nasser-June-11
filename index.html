@@ -2,9 +2,70 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>nasser-Nasser June 11</title>
+		<base href="https://intracomp-real-time-aframe-web-platform.onrender.com//" />
+		<title>aframe-world-nasser-Nasser-June-11</title>
 		<script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
-		<script src="https://unpkg.com/@softeng-761-2025-team-10/aframe-inspector/dist/aframe-inspector.min.js"></script>
+		<!-- <script src="https://unpkg.com/@softeng-761-2025-team-10/aframe-inspector/dist/aframe-inspector.min.js"></script> -->
+		<script src="https://intracomp-real-time-aframe-web-platform.onrender.com//vendor/aframe-inspector/aframe-inspector.js"></script>
+		<script>
+			(function () {
+				function applyGltfColor(entity) {
+					if (!entity.hasAttribute('gltf-model') || !entity.hasAttribute('material')) return;
+					var mat = entity.getAttribute('material');
+					var color = mat && mat.color;
+					if (!color) return;
+					var mesh = entity.getObject3D('mesh');
+					if (!mesh) return;
+					var c = new THREE.Color(color);
+					mesh.traverse(function (node) {
+						if (node.isMesh && node.material) {
+							if (Array.isArray(node.material)) {
+								node.material = node.material.map(function (m) {
+									var cloned = m.__gltfTintClone ? m : m.clone();
+									cloned.__gltfTintClone = true;
+									if (cloned.color) cloned.color.copy(c);
+									cloned.needsUpdate = true;
+									return cloned;
+								});
+							} else {
+								if (!node.material.__gltfTintClone) {
+									node.material = node.material.clone();
+									node.material.__gltfTintClone = true;
+								}
+								if (node.material.color) node.material.color.copy(c);
+								node.material.needsUpdate = true;
+							}
+						}
+					});
+				}
+				function attach(entity) {
+					if (entity.__gltfTintAttached) return;
+					entity.__gltfTintAttached = true;
+					entity.addEventListener('model-loaded', function () { applyGltfColor(entity); });
+					entity.addEventListener('componentchanged', function (e) {
+						if (e.detail && e.detail.name === 'material') applyGltfColor(entity);
+					});
+					if (entity.getObject3D && entity.getObject3D('mesh')) applyGltfColor(entity);
+				}
+				document.addEventListener('DOMContentLoaded', function () {
+					var scene = document.querySelector('a-scene');
+					if (!scene) return;
+					scene.querySelectorAll('*').forEach(attach);
+					scene.addEventListener('child-attached', function (e) {
+						if (e.detail && e.detail.el) attach(e.detail.el);
+					});
+				});
+			})();
+		</script>
+		
+		
 	</head>
-	<body></body>
+	<body>
+		<a-scene>
+			<!-- User entities -->
+			      <a-gltf-model name="Pine Trees" gltf-model="https://intracomp-real-time-aframe-web-platform-50iv.onrender.com/api/assets/5ea01c804fff31ce0f8d343b2ffb193e9bd4976a5153b0e64b817ca0b3b01002.glb" position="0 1.6 -2" id="gltf-model"></a-gltf-model>
+			<a-plane id="ground" position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+			<a-sky id="sky" color="#ECECEC"></a-sky>
+		</a-scene>
+	</body>
 </html>
